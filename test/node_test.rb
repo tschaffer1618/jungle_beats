@@ -10,9 +10,6 @@ class NodeTest < Minitest::Test
 
   def test_attributes
     assert_equal "plop", @node.data
-  end
-
-  def test_next_node 
     assert_nil @node.next_node
   end
 end
