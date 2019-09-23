@@ -11,4 +11,12 @@ class JungleBeat
       @list.append(beat)
     end
   end
+
+  def count
+    @list.count
+  end
+
+  def play
+    `say -r 200 #{@list.to_string}`
+  end
 end
