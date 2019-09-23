@@ -26,4 +26,39 @@ class LinkedListTest < Minitest::Test
     assert_equal "doop", @list.to_string
   end
 
+  def test_append_multiple
+    @list.append("doop")
+    @list.append("deep")
+
+    assert_instance_of Node, @list.head
+
+    head_node = @list.head
+
+    assert_equal "doop", head_node.data
+    assert_instance_of Node, head_node.next_node
+
+    node_2 = head_node.next_node
+
+    assert_equal "deep", node_2.data
+    assert_equal 2, @list.count
+    assert_equal "doop deep", @list.to_string
+
+    @list.append("erp")
+    @list.append("doop")
+
+    assert_equal 4, @list.count
+    assert_equal "doop deep erp doop", @list.to_string
+  end
+
+  def test_find_last_node
+    @list.append("doop")
+
+    assert_equal "doop", @list.find_last_node.data
+
+    @list.append("deep")
+    @list.append("erp")
+
+    assert_equal "erp", @list.find_last_node.data
+  end
+
 end
