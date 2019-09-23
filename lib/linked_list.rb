@@ -13,6 +13,38 @@ class LinkedList
     end
   end
 
+  def prepend(beat)
+    if @head
+      old_head = @head
+      @head = Node.new(beat)
+      @head.next_node = old_head
+    else
+      @head = Node.new(beat)
+    end
+  end
+
+  def insert(position, beat)
+    if position == 0
+      prepend(beat)
+    elsif position > count + 1
+      "The linked list doesn't have enough nodes to insert at position #{position}"
+    elsif position == count + 1
+      append(beat)
+    else
+      node = @head
+      position.times do |i|
+        if i != position - 1
+          node = node.next_node
+        else
+          old_next_node = node.next_node
+          new_node = Node.new(beat)
+          node.next_node = new_node
+          new_node.next_node = old_next_node
+        end
+      end
+    end
+  end
+
   def find_last_node
     return @head unless @head.next_node
     node = @head

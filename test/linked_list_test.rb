@@ -61,4 +61,39 @@ class LinkedListTest < Minitest::Test
     assert_equal "erp", @list.find_last_node.data
   end
 
+  def test_prepend
+    @list.append("plop")
+    @list.append("suu")
+    @list.prepend("dop")
+
+    assert_equal "dop", @list.head.data
+    assert_equal "dop plop suu", @list.to_string
+    assert_equal 3, @list.count
+  end
+
+  def test_insert
+    @list.append("plop")
+    @list.append("suu")
+    @list.prepend("dop")
+    @list.insert(1, "woo")
+
+    assert_equal "dop", @list.head.data
+    assert_equal "dop woo plop suu", @list.to_string
+    assert_equal 4, @list.count
+
+    @list.insert(0, "wop")
+
+    assert_equal "wop", @list.head.data
+    assert_equal "wop dop woo plop suu", @list.to_string
+    assert_equal 5, @list.count
+
+    response = "The linked list doesn't have enough nodes to insert at position 7"
+
+    assert_equal response, @list.insert(7, "doop")
+    assert_equal "wop dop woo plop suu", @list.to_string
+
+    @list.insert(6, "doop")
+    assert_equal "wop dop woo plop suu doop", @list.to_string
+    assert_equal 6, @list.count
+  end
 end
