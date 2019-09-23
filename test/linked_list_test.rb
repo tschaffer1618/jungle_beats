@@ -14,6 +14,8 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_append
+    assert_equal "There are no nodes in the linked list", @list.to_string
+
     @list.append("doop")
 
     assert_instance_of Node, @list.head
@@ -51,6 +53,8 @@ class LinkedListTest < Minitest::Test
   end
 
   def test_find_last_node
+    assert_equal "There are no nodes in the linked list", @list.find_last_node
+
     @list.append("doop")
 
     assert_equal "doop", @list.find_last_node.data
@@ -95,5 +99,66 @@ class LinkedListTest < Minitest::Test
     @list.insert(6, "doop")
     assert_equal "wop dop woo plop suu doop", @list.to_string
     assert_equal 6, @list.count
+  end
+
+  def test_find
+    @list.prepend("shi")
+    @list.append("shu")
+    @list.prepend("deep")
+    @list.insert(1, "woo")
+    @list.append("blop")
+
+    assert_equal "deep woo shi shu blop", @list.to_string
+
+    assert_equal "shi", @list.find(2, 1)
+    assert_equal "woo shi shu", @list.find(1, 3)
+    assert_equal "The linked list doesn't have enough nodes to satisfy this search", @list.find(4, 4)
+    assert_equal "deep woo shi shu blop", @list.find(0, 5)
+  end
+
+  def test_includes
+    @list.prepend("shi")
+    @list.append("shu")
+    @list.prepend("deep")
+    @list.insert(1, "woo")
+    @list.append("blop")
+
+    assert @list.includes?("deep")
+    refute @list.includes?("dep")
+  end
+
+  def test_find_second_last_node
+    assert_equal "There is not a second to last node in the linked list", @list.find_second_last_node
+
+    @list.prepend("shi")
+
+    assert_equal "There is not a second to last node in the linked list", @list.find_second_last_node
+
+    @list.append("shu")
+
+    assert_equal "shi", @list.find_second_last_node.data
+  end
+
+  def test_pop
+    @list.prepend("shi")
+    @list.append("shu")
+    @list.prepend("deep")
+    @list.insert(1, "woo")
+    @list.append("blop")
+
+    assert_equal "blop", @list.pop
+    assert_equal "deep woo shi shu", @list.to_string
+    assert_equal "shu", @list.pop
+    assert_equal "deep woo shi", @list.to_string
+
+    @list.pop
+    @list.pop
+
+    assert_equal "deep", @list.to_string
+
+    assert_equal "deep", @list.pop
+    assert_nil @list.head
+
+    assert_equal "There are no nodes in the linked list", @list.pop
   end
 end
